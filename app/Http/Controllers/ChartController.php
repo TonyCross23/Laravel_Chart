@@ -51,7 +51,25 @@ class ChartController extends Controller
             $date_arr[] = $new_date;
         }
 
-        return view('welcome',compact('currency','total_income','total_outcome','inoutdata','day_arr'));
+
+        $income_amount = [];
+        $outcome_amount = [];
+
+        foreach($date_arr as $a) {
+            $income_amount[] = Inout::where('date',$a['year'])
+                                                    ->whereMonth('date',$a['month'])
+                                                    ->whereDate('date',$a['day'])
+                                                    ->where('type','in')
+                                                    ->sum('amount');
+                                  
+              $outcome_amount[] = Inout::whereYear('date',$a['year'])
+                                                    ->whereMonth('date',$a['month'])
+                                                    ->whereDate('date',$a['day'])
+                                                    ->where('type','out')
+                                                    ->sum('amount');
+        }    
+
+        return view('welcome',compact('currency','total_income','total_outcome','day_arr','income_amount','outcome_amount'));
     }
 
     public function store (Request $request){

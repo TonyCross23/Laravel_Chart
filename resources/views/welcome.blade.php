@@ -59,7 +59,7 @@
                             <small class="text-danger ms-2">Outcome :-{{ $total_outcome }}ks</small>
                         </div>
                     </div>
-                    <canvas id="chart"></canvas>
+                    <canvas id="Mychart"></canvas>
                 </div>
             </div>
 
@@ -68,6 +68,7 @@
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -91,7 +92,7 @@
         })
     @endif
 
-    const ctx = document.getElementById('chart');
+    const ctx = document.getElementById('Mychart');
 
     new Chart(ctx, {
         type: 'bar',
@@ -99,13 +100,13 @@
             labels: @json($day_arr),
             datasets: [{
                     label: 'Income',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: @json($income_amount),
                     borderWidth: 1,
                     backgroundColor: '#24a46d',
                 },
                 {
                     label: 'Outcome',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: @json($outcome_amount),
                     borderWidth: 1,
                     backgroundColor: '#f5365c',
                 }
